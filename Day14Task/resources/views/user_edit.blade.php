@@ -3,7 +3,7 @@
     <div class="col-md-12">
         @include('errors.error')
         <div class="col-md-6">
-            <form class="form-horizontal" action="{{ route('user.editData') }}" method="post">
+            <form class="form-horizontal" action="{{ route('user.editData',[$user->id]) }}" method="post">
                 {{ csrf_field() }}
                 <fieldset>
                     <div class="form-group">

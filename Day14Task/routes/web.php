@@ -23,6 +23,6 @@
     Route::get('/user/about','UserController@AboutUs')->name('user.about');
     Route::get('/user/contactUs','UserController@ContactUs')->name('user.contactUs');
     Route::get('/user/{id}/edit','UserController@UserEditForm')->name('user.editForm');
-    Route::post('/user/edit','UserController@UserEditData')->name('user.editData');
+    Route::post('/user/{id}/edit','UserController@UserEditData')->name('user.editData');
     Route::get('/user/{id}/delete','UserController@DeleteRow')->name('user.deleteRow');
     Route::post('/user/search','UserController@FindSingleUser')->name('user.searchRow');

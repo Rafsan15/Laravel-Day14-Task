@@ -12,20 +12,22 @@ class UserController extends Controller
     {
         return view("Home");
     }
+
     public function UserRegisterForm()
     {
         return view("user_register");
     }
+
     public function UserRegisterData()
     {
-//        $this->validate(request(),[
-//            'username'=>'required|alpha_dash',
-//            'firstname'=>'required',
-//            'lastname'=>'required',
-//            'email'=>'required',
-//            'password'=>'required|confirmed',
-//            'phone'=>'required',
-//        ]);
+    //        $this->validate(request(),[
+    //            'username'=>'required|alpha_dash',
+    //            'firstname'=>'required',
+    //            'lastname'=>'required',
+    //            'email'=>'required',
+    //            'password'=>'required|confirmed',
+    //            'phone'=>'required',
+    //        ]);
         User::create([
             'username'=>request('UserName'),
             'firstname'=>request('FirstName'),
@@ -36,7 +38,8 @@ class UserController extends Controller
             'address'=>request('Address'),
             'gender'=>request('Gender'),
         ]);
-        return "Hello";
+        return redirect()->action('LogInController@UserLoginForm');
+
     }
 
     public function DashBoard()
@@ -45,6 +48,7 @@ class UserController extends Controller
         return view('manage_users',compact('users'));
 
     }
+
     public function FindSingleUser()
     {
         if(request('Key')==null){
@@ -62,23 +66,40 @@ class UserController extends Controller
 
         return "No User Found";
     }
-   public function UserEditForm($id)
-   {
-       $user=User::find($id);
-       return view('user_edit',compact('user'));
-   }
 
-   public function DeleteRow($id)
-   {
+    public function UserEditForm($id)
+    {
+        $user=User::find($id);
+        return view('user_edit',compact('user'));
+    }
+
+    public function UserEditData($id)
+    {
+        $user=User::find($id);
+        $user->update([
+            'username'=>request('UserName'),
+            'firstname'=>request('FirstName'),
+            'lastname'=>request('LastName'),
+            'email'=>request('Email'),
+            'password'=>request('Password'),
+            'phone'=>request('Phone'),
+            'address'=>request('Address'),
+            'gender'=>request('Gender'),
+        ]);
+        return redirect()->action('UserController@DashBoard');
+    }
+
+    public function DeleteRow($id)
+    {
        $deletedRows = user::where('id', $id)->delete();
        return redirect()->action('UserController@DashBoard');
-   }
-
+    }
 
     public function AboutUs()
     {
         return view("user_about");
     }
+
     public function ContactUs()
     {
         return view("user_contactUs");
